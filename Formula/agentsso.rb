@@ -2,20 +2,20 @@
 class Agentsso < Formula
   desc "Binary: axum server, CLI, lifecycle management"
   homepage "https://github.com/permitlayer/permitlayer"
-  version "0.3.0-rc.12"
+  version "0.3.0-rc.13"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.12/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
-      sha256 "9c4452fea57e7098a344e723654ce0e35f4423f7bf1846f029bf43991513148f"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.13/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
+      sha256 "bebca1e93c394b9c80b08a7969ec5c663d3e213f1335f8fcf385c4b6e8000748"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.12/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
-      sha256 "727d2669523f9f1d9a724e2216424fe77b16507068d12ae561324fb00bc53f9f"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.13/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
+      sha256 "8d7ffb4292d984e9c639e64f9722eef62a1a30145ff6d88986ed489fe185b53c"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.12/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "05042c9b3908f3e77ef2cb167ed334a65aa8787cd42549f460e916b59b7baddf"
+    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.13/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "0361c81b9a2d8ccb9d32f7d520c91f7d5a60685f4f4efcbcf46e45686fd160d0"
   end
   license "MIT"
 
@@ -61,7 +61,16 @@ class Agentsso < Formula
     <<~EOS
       permitlayer is installed. To get started:
 
-          agentsso setup gmail
+          1. Create a Desktop OAuth client at
+             https://console.cloud.google.com/apis/credentials and
+             download the JSON ("client_secret_XXXX.json").
+          2. Run setup, pointing at that JSON:
+
+                 agentsso setup gmail --oauth-client ./client_secret.json
+
+             For SSH-from-another-machine, add --headless. The bare
+             `agentsso setup gmail` will interactively prompt for the
+             file path if you forget the flag.
 
       To run the daemon as a Homebrew-managed background service:
 
