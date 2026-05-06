@@ -2,20 +2,20 @@
 class Agentsso < Formula
   desc "Binary: axum server, CLI, lifecycle management"
   homepage "https://github.com/permitlayer/permitlayer"
-  version "0.3.0-rc.13"
+  version "0.3.0-rc.14"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.13/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
-      sha256 "bebca1e93c394b9c80b08a7969ec5c663d3e213f1335f8fcf385c4b6e8000748"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.14/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
+      sha256 "d026bf7149dea762dbf7b1a17116ccadc007dccbdfeba4051694e00abf386562"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.13/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
-      sha256 "8d7ffb4292d984e9c639e64f9722eef62a1a30145ff6d88986ed489fe185b53c"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.14/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
+      sha256 "efec3b86db1138882c78ca3fcc95e0a8d6f6ecedf85ec13bd18e0dc747afc4ff"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.13/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "0361c81b9a2d8ccb9d32f7d520c91f7d5a60685f4f4efcbcf46e45686fd160d0"
+    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.14/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "528e624cc3b34c5515a105b008e93570fafac1afaf1bcae6f080228aee29b87d"
   end
   license "MIT"
 
