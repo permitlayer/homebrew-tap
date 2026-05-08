@@ -2,20 +2,20 @@
 class Agentsso < Formula
   desc "Binary: axum server, CLI, lifecycle management"
   homepage "https://github.com/permitlayer/permitlayer"
-  version "0.3.0-rc.15"
+  version "0.3.0-rc.16"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.15/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
-      sha256 "6b2e791e1c10197b95891dc09b77680b7d84fe0999a299eafdfe886ecc49f745"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.16/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
+      sha256 "bb6b24b4e749ae66bce68a4a7437820dc7361e91eac6591dc9d8c23f8e3fd054"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.15/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
-      sha256 "922052607d81e37a934c8cec6e1ba20def3c1d6fb4ff3bcb9b7c6d5426c0c570"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.16/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
+      sha256 "74128171722783e00b54afe51603f135fd6fa5fcf8932e9ac6a8ada4dab37a68"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.15/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "ef63719b7827c16d6efeb166411aba70f0274c7fdb5dde05d560f9ccbb58d88e"
+    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.16/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "414880e6b2b1d8ad40b3c4118b0f9209ca5362216b30b4fcf63f65c26b7c0128"
   end
   license "MIT"
 
@@ -64,46 +64,25 @@ class Agentsso < Formula
           1. Create a Desktop OAuth client at
              https://console.cloud.google.com/apis/credentials and
              download the JSON ("client_secret_XXXX.json").
-          2. Run setup, pointing at that JSON:
+          2. Connect a service, pointing at that JSON:
 
-                 agentsso setup gmail --oauth-client ./client_secret.json
+                 agentsso connect gmail --oauth-client ./client_secret.json --agent <name>
 
              For SSH-from-another-machine, add --headless. The bare
-             `agentsso setup gmail` will interactively prompt for the
+             `agentsso connect gmail` will interactively prompt for the
              file path if you forget the flag.
 
-      To run the daemon as a Homebrew-managed background service:
-
-          brew services start agentsso
-
-      If `agentsso` is already running (you started it manually with
-      `agentsso start`), stop it first with `agentsso stop` — `brew
-      services start` cannot take over a port already bound by another
-      process. Always verify the result with `brew services list`.
-
-      Or start it yourself:
+      Start the daemon yourself:
 
           agentsso start
 
-      Enable login-autostart instead (separate from brew services):
+      Enable login-autostart so the daemon comes up automatically at
+      login (Story 7.16: SSH-friendly — no GUI session required, works
+      over SSH on macOS 13+):
 
           agentsso autostart enable
 
       Docs: https://github.com/permitlayer/permitlayer
     EOS
-  end
-
-  service do
-    run [opt_bin/"agentsso", "start"]
-    # Restart only on real crashes (signal-killed: SIGSEGV, SIGABRT,
-    # OOM-kill, etc.). Don't respawn on deliberate non-zero exits like
-    # `agentsso start`'s exit-3 when it detects an already-running
-    # daemon — that's a configuration conflict, not a crash, and
-    # respawn-looping it just produces noisy launchd `error 78` rows
-    # in `brew services list` without resolving the conflict.
-    keep_alive crashed: true
-    log_path var/"log/agentsso.log"
-    error_log_path var/"log/agentsso.log"
-    working_dir HOMEBREW_PREFIX
   end
 end
