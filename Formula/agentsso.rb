@@ -2,20 +2,20 @@
 class Agentsso < Formula
   desc "Binary: axum server, CLI, lifecycle management"
   homepage "https://github.com/permitlayer/permitlayer"
-  version "0.3.0-rc.21"
+  version "0.3.0-rc.22"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.21/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
-      sha256 "c224b38b93c7fe9634800fbf09b520a89d559e0731926c8fd58a0711bbffa53c"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.22/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
+      sha256 "f17a44bc8c1bb44ed942f5e5c194933f2f7ab6566ae39535803bccd21459cbbd"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.21/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
-      sha256 "6bcbefec63c82dde9cae5b5d9bbb8774b5a530bf6c0e6a0a133e708a162bb145"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.22/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
+      sha256 "ac9bba1731ca17061806ee199815852b04fced53ea6c352b36bd4692edab211c"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.21/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "dd927b24663be5a1982c5301913234bbfd705581f7df1e9d79f20b19a8b7a21d"
+    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.22/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "7c3557adb93c618653f0d7462f3f2a90d289e8ff4487c862fce01c5f75f98c11"
   end
   license "MIT"
 
@@ -61,26 +61,38 @@ class Agentsso < Formula
     <<~EOS
       permitlayer is installed. To get started:
 
-          1. Create a Desktop OAuth client at
-             https://console.cloud.google.com/apis/credentials and
-             download the JSON ("client_secret_XXXX.json").
-          2. Connect a service, pointing at that JSON:
+      1. Set up the system service (one-time, per machine):
 
-                 agentsso connect gmail --oauth-client ./client_secret.json --agent <name>
+             sudo agentsso service install
 
-             For SSH-from-another-machine, add --headless. The bare
-             `agentsso connect gmail` will interactively prompt for the
-             file path if you forget the flag.
+         macOS will display a "Background item added" notification. If
+         the daemon doesn't appear running, check
+         System Settings → General → Login Items → Allow in the Background.
 
-      Start the daemon yourself:
+      2. From your end-user account, register an agent and mint a
+         bearer token:
 
-          agentsso start
+             agentsso agent register <name> --policy <policy-name>
 
-      Enable login-autostart so the daemon comes up automatically at
-      login (Story 7.16: SSH-friendly — no GUI session required, works
-      over SSH on macOS 13+):
+         The token is written to ~/.agentsso/agent-bearer.token and is
+         the credential your MCP client (OpenClaw / Claude Desktop /
+         Cursor) authenticates with.
 
-          agentsso autostart enable
+      3. Connect a service. Create a Desktop OAuth client at
+         https://console.cloud.google.com/apis/credentials, download
+         the JSON, and run:
+
+             agentsso connect gmail --oauth-client ./client_secret.json --agent <name>
+
+         For SSH-from-another-machine, add --headless.
+
+      Verify the daemon is up:
+
+          agentsso service status
+
+      Daemon logs:
+
+          /Library/Logs/permitlayer/daemon.log
 
       Docs: https://github.com/permitlayer/permitlayer
     EOS
