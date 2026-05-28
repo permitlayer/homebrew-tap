@@ -2,20 +2,20 @@
 class Agentsso < Formula
   desc "Binary: axum server, CLI, lifecycle management"
   homepage "https://github.com/permitlayer/permitlayer"
-  version "0.3.0-rc.43"
+  version "1.0.0"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.43/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
-      sha256 "705acaba918390767b4f3688a9e767d5b28f86c7da39a4189c179c587f1a0716"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v1.0.0/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
+      sha256 "ae4c557259ec869a2eb6ae1a95d0e3b85a0d3c624ada8fd5bdc3f7cc295cedc3"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.43/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
-      sha256 "ddb1db607858da85fe2c07fb1827e93d10ce77d5c3ef2578578a356ebbf97629"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v1.0.0/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
+      sha256 "c9e5c9267a5657ed740d26fb6d431af5070630ae58c9853dc50f4740ff375f0a"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/permitlayer/permitlayer/releases/download/v0.3.0-rc.43/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "471782c4467a49e5b22b553fc462549ae6862f05863a7d513199e33a12d229cb"
+    url "https://github.com/permitlayer/permitlayer/releases/download/v1.0.0/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "7d5f371d31466929bebcc3d2d6df9edeff63002553c3b74713d3c68d662fb015"
   end
   license "MIT"
 
@@ -63,28 +63,24 @@ class Agentsso < Formula
 
       1. Set up the system service (one-time, per machine):
 
-             sudo agentsso service install
+             sudo agentsso setup
 
          macOS will display a "Background item added" notification. If
          the daemon doesn't appear running, check
          System Settings → General → Login Items → Allow in the Background.
 
-      2. From your end-user account, register an agent and mint a
-         bearer token:
-
-             agentsso agent register <name> --policy <policy-name>
-
-         The token is written to ~/.agentsso/agent-bearer.token and is
-         the credential your MCP client (OpenClaw / Claude Desktop /
-         Cursor) authenticates with.
-
-      3. Connect a service. Create a Desktop OAuth client at
+      2. From your end-user account, connect ONE agent to ONE Google
+         service in a single command. Create a Desktop OAuth client at
          https://console.cloud.google.com/apis/credentials, download
-         the JSON, and run:
+         the JSON, then run (gmail | calendar | drive):
 
-             agentsso connect gmail --oauth-client ./client_secret.json --agent <name>
+             agentsso quickstart gmail --read --oauth-client ./client_secret.json
 
-         For SSH-from-another-machine, add --headless.
+         Use --read for read-only or --read-write for read+write. The
+         bearer token is written to ~/.agentsso/agent-bearer.token and
+         is the credential your MCP client (OpenClaw / Claude Desktop /
+         Cursor) authenticates with. Add --mcp-config-out <path> to emit
+         the client's MCP config snippet.
 
       Verify the daemon is up:
 
