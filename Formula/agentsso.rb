@@ -2,20 +2,20 @@
 class Agentsso < Formula
   desc "Binary: axum server, CLI, lifecycle management"
   homepage "https://github.com/permitlayer/permitlayer"
-  version "1.3.4"
+  version "1.4.1"
   if OS.mac?
     if Hardware::CPU.arm?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v1.3.4/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
-      sha256 "75bf684ef7531a59ed55c1decbf207e081d557b1aa06519befe305ebdf156a89"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v1.4.1/permitlayer-daemon-aarch64-apple-darwin.tar.xz"
+      sha256 "bf8decfe47cf84c20238c2338e925918f0cf4dc58737cbfc29a25e69db24da08"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/permitlayer/permitlayer/releases/download/v1.3.4/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
-      sha256 "c3eecb2bf69ce23db3196c95c217aa5c1d51b87affae8680a7f899dfc6865807"
+      url "https://github.com/permitlayer/permitlayer/releases/download/v1.4.1/permitlayer-daemon-x86_64-apple-darwin.tar.xz"
+      sha256 "db439929305de63e74d26d019dfa5b75a22e3224b191a0261765c68289765519"
     end
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "https://github.com/permitlayer/permitlayer/releases/download/v1.3.4/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
-    sha256 "1636c7019050747ee6c0470a70ebd097f1ca790ecaeea21b94d5e5943ffbeee8"
+    url "https://github.com/permitlayer/permitlayer/releases/download/v1.4.1/permitlayer-daemon-x86_64-unknown-linux-gnu.tar.xz"
+    sha256 "41b8db39d22431637c60e753b51e9527810b0972b0d19257b0e21bd136627f73"
   end
   license "MIT"
 
